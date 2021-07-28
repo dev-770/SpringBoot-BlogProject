@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +14,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +38,6 @@ public class Board {
 	@Lob // 대용량 데이터
 	private String content;
 	
-	@ColumnDefault("0")
 	private long count;
 	
 	@ManyToOne // Many = Board, One = User
@@ -46,7 +45,7 @@ public class Board {
 	private User user; // FK
 	
 	// One = Board, Many = Reply
-	@OneToMany(mappedBy = "board") // mappedBy 연관관계X, DB X 
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 연관관계X, DB X 
 	private List<Reply> reply;
 	
 	@CreationTimestamp
