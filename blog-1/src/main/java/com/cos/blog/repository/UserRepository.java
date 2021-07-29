@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.cos.blog.model.User;
 
 // DAO 자동으로 Bean 등록
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 	// JPA Naming 쿼리 (select * from user where username = ?1 and password = ?2;)
 	User findByUsernameAndPassword(String username, String password);
 	
