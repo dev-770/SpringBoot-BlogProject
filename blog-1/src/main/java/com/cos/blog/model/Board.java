@@ -30,7 +30,7 @@ public class Board {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	private long id;
+	private int id;
 	
 	@Column(nullable = false, length = 100)
 	private String title;
@@ -38,7 +38,7 @@ public class Board {
 	@Lob // 대용량 데이터
 	private String content;
 	
-	private long count;
+	private int count;
 	
 	@ManyToOne // Many = Board, One = User
 	@JoinColumn(name="userId")

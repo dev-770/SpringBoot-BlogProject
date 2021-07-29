@@ -27,7 +27,7 @@ public class User {
 
 	@Id // Primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 연결된  DB 전략에 따라 넘김
-	private long id;
+	private int id;
 	
 	@Column(nullable = false, length = 30, unique = true)
 	private String username;
