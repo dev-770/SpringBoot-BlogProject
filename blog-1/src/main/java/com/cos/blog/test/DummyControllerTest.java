@@ -27,7 +27,7 @@ public class DummyControllerTest {
 	private UserRepository userRepository;
 
 	@DeleteMapping("/dummy/user/{id}")
-	private String delete(@PathVariable long id) {
+	private String delete(@PathVariable int id) {
 		try {
 			userRepository.deleteById(id);
 		} catch(EmptyResultDataAccessException e) {
@@ -39,7 +39,7 @@ public class DummyControllerTest {
 	// Spring  json => java object 변환
 	// @Transactional // 함수종료시 Commit
 	@PutMapping("/dummy/user/{id}")
-	public User updateUser(@PathVariable long id, @RequestBody User requestUser) {
+	public User updateUser(@PathVariable int id, @RequestBody User requestUser) {
 		User user = userRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("수정에 실패 했습니다.");
 		});
@@ -65,7 +65,7 @@ public class DummyControllerTest {
 	}
 
 	@GetMapping("/dummy/user/{id}")
-	public User detail(@PathVariable long id) {
+	public User detail(@PathVariable int id) {
 		User user = userRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("해당 유저는 없습니다. id : " + id);
 		});
