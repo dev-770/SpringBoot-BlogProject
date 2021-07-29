@@ -3,6 +3,7 @@ package com.cos.blog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,12 +31,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD());
 	}
 	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable() // csrf 토큰 비활성화 (테스트때만) 
 			.authorizeRequests()
-				.antMatchers("/", "/auth/**", "/js/**", "/css/**") // auth 요청 개방
+				.antMatchers("/", "/auth/**", "/js/**", "/css/**","/image/**") // auth 요청 개방
 				.permitAll()
 				.anyRequest() // 다른 요청 인증
 				.authenticated()
