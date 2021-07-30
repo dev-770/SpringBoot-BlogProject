@@ -1,7 +1,7 @@
 let index = {
 	init: function() {
-		$("#btn-save").on("click", ()=>{
-			this.save();
+		$("#btn-insert").on("click", ()=>{
+			this.insert();
 		});
 		$("#btn-update").on("click", ()=>{
 			this.update();
@@ -9,15 +9,18 @@ let index = {
 		$("#btn-delete").on("click", ()=>{
 			this.deleteById();
 		});
+		$("#btn-reply-insert").on("click", ()=>{ 
+			this.replyInsert();
+		});
 	},
 	
-	save: function() {
+	insert: function() {
 		let data = {
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
 
-		//console.log(data);
+		console.log(data);
 		
 		$.ajax({
 			type: "POST",
@@ -33,17 +36,20 @@ let index = {
 		}); // ajax통신을 이용, json 변경->insert 요청
 	},
 
-	update: function() {
-		let id = $("#id").text();
+	update: function() { 
 
 		let data = {
+			id: $("#id").val(),
+			user: $("#user").val(),
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
+
+		// console.log(data);
 		
 		$.ajax({
 			type: "PUT",
-			url: "/api/board/"+id,
+			url: `/api/board/${data.id}`,
 			data: JSON.stringify(data), // http bodydata
 			contentType: "application/json; charset=utf-8", // MINE TYPE
 			dataType: "json" // 요청 -> 응답 Default: String[JSON] => jsObject로 변경
@@ -68,7 +74,32 @@ let index = {
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		}); // ajax통신을 이용, json 변경->insert 요청
+	},
+
+	replyInsert: function(){
+		let data = {
+				userId: $("#userId").val(),
+				boardId: $("#boardId").val(),
+				content: $("#reply-content").val()
+		};
+
+		// console.log(data);
+		
+		$.ajax({ 
+			type: "POST",
+			url: `/api/board/${data.boardId}/reply`,
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		}).done(function(resp){
+			alert("댓글작성이 완료되었습니다.");
+			location.href = `/board/${data.boardId}`;
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		}); 
 	}
+
 }
+
 
 index.init();
