@@ -19,6 +19,14 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Transactional(readOnly = true)
+	public User searchId(String username) {
+		User user = userRepository.findByUsername(username).orElseGet(()->{
+			return new User();
+		});
+			return user;
+	}
+	
 	@Transactional // All or NotAll
 	public void join(User user) {
 		String rawPassword = user.getPassword();
