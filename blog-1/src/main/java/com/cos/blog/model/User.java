@@ -29,7 +29,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 연결된  DB 전략에 따라 넘김
 	private int id;
 	
-	@Column(nullable = false, length = 30, unique = true)
+	@Column(nullable = false, length = 100, unique = true)
 	private String username;
 	
 	@Column(nullable = false, length = 100)
@@ -44,5 +44,9 @@ public class User {
 	
 	@CreationTimestamp // 시간 자동 입력
 	private Timestamp createDate;
+	
+	// kakao, naver. google
+	@Column
+	private String oauth;
 	
 }
