@@ -3,6 +3,7 @@ package com.cos.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,11 +49,17 @@ public class Board {
 	private User user; // FK
 	
 	// One = Board, Many = Reply
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 연관관계X, DB X 
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // mappedBy 연관관계X, DB X 
 	@JsonIgnoreProperties({"board"})
 	@OrderBy("id desc")
 	private List<Reply> replys;
 	
 	@CreationTimestamp
 	private Timestamp createDate;
+
+	@Override
+	public String toString() {
+		return "Board [id=" + id + ", title=" + title + ", content=" + content + ", count=" + count + ", user=" + user
+				+ ", replys=" + replys + ", createDate=" + createDate + "]";
+	}
 }
