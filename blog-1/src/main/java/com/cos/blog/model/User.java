@@ -48,5 +48,11 @@ public class User {
 	// kakao, naver. google
 	@Column
 	private String oauth;
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", role="
+				+ role + ", createDate=" + createDate + ", oauth=" + oauth + "]";
+	}
 	
 }
