@@ -10,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cos.blog.dto.BoardDto;
 import com.cos.blog.dto.ReplyDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
-import com.cos.blog.repository.UserRepository;
 
 @Service
 public class BoardService {
@@ -24,9 +22,6 @@ public class BoardService {
 	
 	@Autowired
 	private ReplyRepository replyRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Transactional 
 	public void write(Board board, User user) {  // title, content, user
@@ -65,21 +60,11 @@ public class BoardService {
 	
 	@Transactional
 	public void replyWrite (ReplyDto replyDto) {
-		
-		User user = userRepository.findById(replyDto.getUserId()).orElseThrow(()->{
-			return new IllegalArgumentException("Error : 유저 id를 찾을 수 없습니다.");
-		}); 
-		
-		Board board = boardRepository.findById(replyDto.getBoardId()).orElseThrow(()->{
-			return new IllegalArgumentException("Error : 게시글 id를 찾을 수 없습니다.");
-		}); 
-		
-		Reply reply = Reply.builder()
-				.user(user)
-				.board(board)
-				.content(replyDto.getContent())
-				.build();
-
-		replyRepository.save(reply);
+		replyRepository.mSave(replyDto.getUserId(), replyDto.getBoardId(), replyDto.getContent());
+	}
+	
+	@Transactional
+	public void replyDelete (int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 }
