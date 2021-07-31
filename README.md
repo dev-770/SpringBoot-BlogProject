@@ -134,3 +134,4 @@ if(resp.status === 500){
 ```
 @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // casecade 추가
 ```
+***
