@@ -89,7 +89,7 @@ try {
 - ajax 사용으로 회원정보 수정 기능
 - OAuth로 이용한 로그인은 수정X, 회원가입 수정O 처리
 ```
-	<c:choose>
+<c:choose>
     <c:when test="${empty principal.user.oauth }">
       ...
     </c:when>
