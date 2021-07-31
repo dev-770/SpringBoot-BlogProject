@@ -93,7 +93,7 @@ try {
     <c:when test="${empty principal.user.oauth }">
       ...
     </c:when>
-  </c:choose>
+</c:choose>
 ```
 
 #### 게시판, 답글
